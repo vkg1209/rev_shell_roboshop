@@ -27,7 +27,7 @@ do
     fi
 
     aws route53 change-resource-record-sets \
-    --hosted-zone-id Z0948150OFPSYTNVYZOY \
+    --hosted-zone-id Z01953923TROREUOJRMSG \
     --change-batch '
     {
         "Comment": "Creating/Updating Record Set",
