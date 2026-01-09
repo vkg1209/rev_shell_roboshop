@@ -6,11 +6,11 @@ SECURITY_GROUP_ID=sg-09135f6961d4e1c54
 LOG_FOLDER="/var/log/shell-roboshop"
 LOG_FILE="$LOG_FOLDER/$0.log"
 
-if [ ! -d LOG_FOLDER ]; then
+if [ ! -d $LOG_FOLDER ]; then
     mkdir $LOG_FOLDER
 fi
 
-if [ ! -f LOG_FILE ]; then
+if [ ! -f $LOG_FILE ]; then
     touch $LOG_FILE
 fi
 
