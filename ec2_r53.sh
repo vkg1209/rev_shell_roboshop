@@ -2,6 +2,7 @@
 
 AMI_ID=ami-09c813fb71547fc4f
 SECURITY_GROUP_ID=sg-09135f6961d4e1c54
+DOMAIN_NAME=bloombear.fun
 
 LOG_FOLDER="/var/log/shell-roboshop"
 LOG_FILE="$LOG_FOLDER/$0.log"
