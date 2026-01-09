@@ -16,16 +16,16 @@ fi
 
 for ec2 in $@
 do
-    INSTANCE_ID=$(aws ec2 run-instances \
-        --image-id "$AMI_ID" \
-        --instance-type t3.micro \
-        --security-group-ids "$SECURITY_GROUP_ID" \
-        --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$ec2}]" \
-        --query 'Reservations[0].Instances[0].InstanceId' \
-        --output text
-    )
+    # INSTANCE_ID=$(aws ec2 run-instances \
+    #     --image-id "$AMI_ID" \
+    #     --instance-type t3.micro \
+    #     --security-group-ids "$SECURITY_GROUP_ID" \
+    #     --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$ec2}]" \
+    #     --query 'Reservations[0].Instances[0].InstanceId' \
+    #     --output text
+    # )
 
-    # INSTANCE_ID=$(aws ec2 run-instances --image-id $AMI_ID --instance-type t3.micro --security-group-ids $SECURITY_GROUP_ID --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=${instance}}]" --query 'Instances[0].InstanceId' --output text) &>> $LOG_FILE
+    INSTANCE_ID=$(aws ec2 run-instances --image-id $AMI_ID --instance-type t3.micro --security-group-ids $SECURITY_GROUP_ID --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=${instance}}]" --query 'Instances[0].InstanceId' --output text) &>> $LOG_FILE
 
     # if [ $ec2 = "frontend" ]; then
     #     IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].PublicIpAddress' --output text)
@@ -37,12 +37,12 @@ do
     #     RECORD_NAME="$ec2.bloombear.fun"
     # fi
 
-    if [ $instance == "frontend" ]; then
+    if [ $ec2 = "frontend" ]; then
         IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].PublicIpAddress' --output text) &>> $LOG_FILE
         RECORD_NAME="$DOMAIN_NAME"
     else 
         IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].PrivateIpAddress' --output text) &>> $LOG_FILE
-        RECORD_NAME="$instance.$DOMAIN_NAME"
+        RECORD_NAME="$ec2.$DOMAIN_NAME"
     fi
 
     aws route53 change-resource-record-sets \
