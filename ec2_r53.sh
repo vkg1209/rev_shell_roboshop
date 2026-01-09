@@ -16,12 +16,21 @@ fi
 
 for ec2 in $@
 do
+    INSTANCE_ID=$(aws ec2 run-instances \
+        --image-id "$AMI_ID" \
+        --instance-type t3.micro \
+        --security-group-ids "$SECURITY_GROUP_ID" \
+        --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$ec2}]" \
+        --query 'Reservations[0].Instances[0].InstanceId' \
+        --output text
+    )
+
     if [ $ec2 = "frontend" ]; then
-        IP=$(aws ec2 run-instances --image-id $AMI_ID --instance-type t3.micro --security-group-ids $SECURITY_GROUP_ID --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$ec2}]" --query 'Reservations[0].Instances[0].PublicIpAddress' --output text)
+        IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].PublicIpAddress' --output text)
 
         RECORD_NAME="$ec2.bloombear.fun"
     else 
-        IP=$(aws ec2 run-instances --image-id $AMI_ID --instance-type t3.micro --security-group-ids $SECURITY_GROUP_ID --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$ec2}]" --query 'Reservations[0].Instances[0].PrivateIpAddress' --output text)
+        IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].PrivateIpAddress' --output text)
 
         RECORD_NAME="$ec2.bloombear.fun"
     fi
