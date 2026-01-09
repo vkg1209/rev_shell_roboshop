@@ -30,8 +30,8 @@ do
     --hosted-zone-id Z0948150OFPSYTNVYZOY \
     --change-batch '
     {
-        "Comment": "Creating/Updating Record Set"
-        ,"Changes": [{
+        "Comment": "Creating/Updating Record Set",
+        "Changes": [{
         "Action"              : "UPSERT"
         ,"ResourceRecordSet"  : {
             "Name"              : "'$RECORD_NAME'"
