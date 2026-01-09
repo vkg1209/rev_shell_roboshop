@@ -32,14 +32,16 @@ do
     {
         "Comment": "Creating/Updating Record Set",
         "Changes": [{
-        "Action"              : "UPSERT"
-        ,"ResourceRecordSet"  : {
-            "Name"              : "'$RECORD_NAME'"
-            ,"Type"             : "A"
-            ,"TTL"              : 1
-            ,"ResourceRecords"  : [{
-                "Value"         : "'$IP'"
-            }]
+            "Action"              : "UPSERT",
+            "ResourceRecordSet"  : {
+                "Name"              : "'$RECORD_NAME'",
+                "Type"             : "A",
+                "TTL"              : "1" ,
+                "ResourceRecords"  : [{
+                    "Value"         : "'${IP}'"
+                }]
+            }
+        }]
     }'
 
 done
