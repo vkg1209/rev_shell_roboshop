@@ -38,10 +38,10 @@ do
     # fi
 
     if [ $instance == "frontend" ]; then
-        IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].PublicIpAddress' --output text) &>> LOG_FILE
+        IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].PublicIpAddress' --output text) &>> $LOG_FILE
         RECORD_NAME="$DOMAIN_NAME"
     else 
-        IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].PrivateIpAddress' --output text) &>> LOG_FILE
+        IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].PrivateIpAddress' --output text) &>> $LOG_FILE
         RECORD_NAME="$instance.$DOMAIN_NAME"
     fi
 
